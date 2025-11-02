@@ -8,8 +8,8 @@ ALIAS="self-built-wallet-key"  # Updated key alias
 APK_UNSIGNED="app/build/outputs/apk/release/app-release-unsigned.apk"
 APK_SIGNED="app/build/outputs/apk/release/app-release.apk"
 SDK_VERSION="34.0.0"
-VERSION_NAME="6.6.8_1"
-VERSION_CODE="1719592618"
+VERSION_NAME="7.2.1_1"
+VERSION_CODE="1760818366"
 APP_ID_SUFFIX=".selfCustomBuild"
 
 # Function to log messages
@@ -66,7 +66,7 @@ generate_signing_key() {
 # Update and install necessary packages
 log "INFO" "Updating package list and installing necessary packages..."
 sudo apt update && sudo apt install -y \
-  openjdk-21-jdk \
+  openjdk-17-jdk \
   wget \
   unzip \
   build-essential \
@@ -74,12 +74,12 @@ sudo apt update && sudo apt install -y \
   curl \
   ca-certificates \
   gnupg
-check_command "Failed to install necessary packages. If repo has no Java 21 manually change script to 17."
+check_command "Failed to install necessary packages. If repo has no Java 17 manually change script to 17."
 
 log "INFO" "Updating package list and installing necessary packages..."
-sudo update-alternatives --set java /usr/lib/jvm/java-21-openjdk-amd64/bin/java
-sudo update-alternatives --set javac /usr/lib/jvm/java-21-openjdk-amd64/bin/javac
-check_command "Failed to select Java 21."
+sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
+check_command "Failed to select Java 17."
 
 # Install Node.js 20 LTS and npm
 log "INFO" "Installing Node.js $NODE_VERSION..."
@@ -109,7 +109,7 @@ fi
 
 mkdir -p "$ANDROID_HOME/cmdline-tools"
 pushd "$ANDROID_HOME/cmdline-tools" > /dev/null
-wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
+wget https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip -O cmdline-tools.zip
 unzip cmdline-tools.zip
 mv cmdline-tools latest
 export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
