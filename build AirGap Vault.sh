@@ -8,8 +8,8 @@ ALIAS="self-built-wallet-key"  # Updated key alias
 APK_UNSIGNED="app/build/outputs/apk/release/app-release-unsigned.apk"
 APK_SIGNED="app/build/outputs/apk/release/app-release.apk"
 SDK_VERSION="34.0.0"
-VERSION_NAME="3.32.2_1"
-VERSION_CODE="62534"
+VERSION_NAME="3.34.0_1"
+VERSION_CODE="71033"
 APP_ID_SUFFIX=".selfCustomBuild"
 
 # Function to log messages
@@ -109,7 +109,7 @@ fi
 
 mkdir -p "$ANDROID_HOME/cmdline-tools"
 pushd "$ANDROID_HOME/cmdline-tools" > /dev/null
-wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
+wget https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip -O cmdline-tools.zip
 unzip cmdline-tools.zip
 mv cmdline-tools latest
 export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
