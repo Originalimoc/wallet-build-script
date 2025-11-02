@@ -172,6 +172,16 @@ sed -i 's/\"package_name\": "\(.*\)"/\"package_name\": "\1'$APP_ID_SUFFIX'"/' $G
 
 # Build the APK
 cd android
+log "INFO" "Configuring Gradle with more memory to prevent 'Java heap space' errors..."
+GRADLE_PROPERTIES_FILE="gradle.properties"
+JVM_ARGS="org.gradle.jvmargs=-Xmx6g"
+if ! grep -q "org.gradle.jvmargs" "$GRADLE_PROPERTIES_FILE" 2>/dev/null; then
+    echo "" >> "$GRADLE_PROPERTIES_FILE"
+    echo "$JVM_ARGS" >> "$GRADLE_PROPERTIES_FILE"
+    log "INFO" "Successfully added '$JVM_ARGS' to $GRADLE_PROPERTIES_FILE"
+else
+    log "INFO" "Gradle memory setting already exists. No changes needed."
+fi
 log "INFO" "Building the release APK..."
 ./gradlew assembleRelease
 check_command "Failed to build the APK."
@@ -179,7 +189,7 @@ log "INFO" "APK generated at: $(pwd)/$APK_UNSIGNED"
 
 # Sign the APK and rename it
 log "INFO" "Signing the APK..."
-apksigner sign --ks "$KEYSTORE" --ks-key-alias "$ALIAS" --ks-pass pass:"$keystore_password" --key-pass pass:"$key_password" "$APK_UNSIGNED"
+"$ANDROID_HOME/build-tools/$SDK_VERSION/apksigner" sign --ks "$KEYSTORE" --ks-key-alias "$ALIAS" --ks-pass pass:"$keystore_password" --key-pass pass:"$key_password" "$APK_UNSIGNED"
 check_command "Failed to sign the APK."
 mv "$APK_UNSIGNED" "$APK_SIGNED"
 check_command "Failed to rename the APK."
